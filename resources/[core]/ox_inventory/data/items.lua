@@ -1,14 +1,32 @@
 return {
 	['testburger'] = {
-		label = 'test burger',
-		weight = 1,
+		label = 'Test Burger',
+		weight = 220,
+		degrade = 60,
 		client = {
 			status = { hunger = 200000 },
 			anim = 'eating',
 			prop = 'burger',
 			usetime = 2500,
-			notification = 'this is just a test yo'
+			export = 'ox_inventory_examples.testburger'
 		},
+		server = {
+			test = 'what an amazingly delicious burger, amirite?'
+		},
+		buttons = {
+			{
+				label = 'Lick it',
+				action = function(slot)
+					print('You licked the burger')
+				end
+			},
+			{
+				label = 'Squeeze it',
+				action = function(slot)
+					print('You squeezed the burger :(')
+				end
+			}
+		}
 	},
 
 	['bandage'] = {
@@ -72,38 +90,9 @@ return {
 		consume = 0
 	},
 
-	['drivers_license'] = {
-        label = 'Drivers License',
-        weight = 50,
-        stack = false,
-        close = true,
-        consume = 0,
-        client = {
-            export = "qidentification.showdrivers_license"
-        }
-    },
-
-    ['identification'] = {
-        label = 'ID Card',
-        weight = 50,
-        stack = false,
-        close = true,
-        consume = 0,
-        client = {
-            export = "qidentification.showidentification"
-        }
-    },
-
-	['firearms_license'] = {
-	label = 'Firearms License',
-        weight = 50,
-        stack = false,
-        close = true,
-        consume = 0,
-        client = {
-            export = "qidentification.showfirearms_license"
-        }
-    },
+	['identification'] = {
+		label = 'Identification',
+	},
 
 	['panties'] = {
 		label = 'Knickers',
@@ -175,6 +164,24 @@ return {
 			usetime = 2500,
 			cancel = true,
 			notification = 'You drank some refreshing water'
+		}
+	},
+
+	['radio'] = {
+		label = 'Radio',
+		weight = 1000,
+		stack = false,
+		consume = 0,
+		allowArmed = true
+	},
+
+	['armour'] = {
+		label = 'Bulletproof Vest',
+		weight = 3000,
+		stack = false,
+		client = {
+			anim = { dict = 'clothingshirt', clip = 'try_shirt_positive_d' },
+            usetime = 3500
 		}
 	},
 }

@@ -1,9 +1,19 @@
-local Items = items()
+local Items = shared.items
+
+local function displayMetadata(metadata, value)
+	local data = metadata
+	if type(metadata) == 'string' and value then data = { [metadata] = value } end
+	SendNUIMessage({
+		action = 'displayMetadata',
+		data = data
+	})
+end
+exports('displayMetadata', displayMetadata)
 
 local function GetItem(item)
 	if item then
 		item = string.lower(item)
-		if item:find('weapon_') then item = string.upper(item) end
+		if item:sub(0, 7) == 'weapon_' then item = string.upper(item) end
 		return Items[item]
 	end
 	return Items
@@ -22,25 +32,24 @@ local ox_inventory = exports[shared.resource]
 -----------------------------------------------------------------------------------------------
 -- Clientside item use functions
 -----------------------------------------------------------------------------------------------
+
 Item('bandage', function(data, slot)
-	local maxHealth = 200
-	local health = GetEntityHealth(PlayerData.ped)
-	-- if health < maxHealth then
-		ox_inventory:useItem(data, function(data)
-			if data then
-				SetEntityHealth(PlayerData.ped, math.min(maxHealth, math.floor(health + maxHealth / 16)))
-				ox_inventory:notify({text = 'You feel better already'})
-			end
-		end)
-	-- end
+	local maxHealth = GetEntityMaxHealth(cache.ped)
+	local health = GetEntityHealth(cache.ped)
+	ox_inventory:useItem(data, function(data)
+		if data then
+			SetEntityHealth(cache.ped, math.min(maxHealth, math.floor(health + maxHealth / 16)))
+			ox_inventory:notify({text = 'You feel better already'})
+		end
+	end)
 end)
 
 Item('armour', function(data, slot)
-	if GetPedArmour(PlayerData.ped) < 100 then
+	if GetPedArmour(cache.ped) < 100 then
 		ox_inventory:useItem(data, function(data)
 			if data then
 				SetPlayerMaxArmour(PlayerData.id, 100)
-				SetPedArmour(PlayerData.ped, 100)
+				SetPedArmour(cache.ped, 100)
 			end
 		end)
 	end
@@ -53,10 +62,10 @@ Item('parachute', function(data, slot)
 			if data then
 				local chute = `GADGET_PARACHUTE`
 				SetPlayerParachuteTintIndex(PlayerData.id, -1)
-				GiveWeaponToPed(PlayerData.ped, chute, 0, true, false)
-				SetPedGadget(PlayerData.ped, chute, true)
+				GiveWeaponToPed(cache.ped, chute, 0, true, false)
+				SetPedGadget(cache.ped, chute, true)
 				lib.requestModel(1269906701)
-				client.parachute = CreateParachuteBagObject(PlayerData.ped, true, true)
+				client.parachute = CreateParachuteBagObject(cache.ped, true, true)
 				if slot.metadata.type then
 					SetPlayerParachuteTintIndex(PlayerData.id, slot.metadata.type)
 				end

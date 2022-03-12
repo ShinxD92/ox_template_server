@@ -4,9 +4,15 @@
 
 # Framework
 
-Currently, this requires our _**[fork of ESX Legacy](https://github.com/overextended/es_extended/)**_ for some features, loading, and user data. The inventory was designed with the intention to move towards a more generic / standalone structure so it can be integrated into any framework without hassle, but that's for a future update.
+The inventory was designed with the intention to move towards a more generic / standalone structure so it can be integrated into any framework without too much hassle. I will be writing a guide for manually setting up support _sometime soon™_. In the mean-time, it will work without any alterations if using the latest updates to **[ESX Legacy](https://github.com/esx-framework/esx-legacy)**.
 
-I will be working on a guide for manually updating your own ESX _sometime soon™_, around the time I setup more event handlers to remove the last parts of the code that make ESX a dependency.
+# Config
+Refer to the [documentation](https://overextended.github.io/ox_inventory/#configuration) setting your config.  
+When set, you can add the following to your 'server.cfg'
+```
+exec @ox_inventory/config.cfg
+ensure ox_inventory
+```
 
 # Logging
 

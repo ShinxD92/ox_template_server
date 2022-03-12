@@ -32,11 +32,11 @@ if shared.qtarget then
 	})
 end
 
-local table = import 'table'
+local table = lib.table
 
 ---@param search string|number slots|1, count|2
----@param item table|string
----@param metadata? table|string
+---@param item table | string
+---@param metadata? table | string
 function Inventory.Search(search, item, metadata)
 	if item then
 		if search == 'slots' then search = 1 elseif search == 'count' then search = 2 end
@@ -45,9 +45,9 @@ function Inventory.Search(search, item, metadata)
 
 		local items = #item
 		local returnData = {}
-		for i=1, items do
+		for i = 1, items do
 			local item = string.lower(item[i])
-			if item:find('weapon_') then item = string.upper(item) end
+			if item:sub(0, 7) == 'weapon_' then item = string.upper(item) end
 			if search == 1 then returnData[item] = {}
 			elseif search == 2 then returnData[item] = 0 end
 			for _, v in pairs(PlayerData.inventory) do
@@ -109,7 +109,9 @@ end
 Inventory.Stashes = setmetatable(data('stashes'), {
 	__call = function(self)
 		for id, stash in pairs(self) do
-			if shared.qtarget then
+			if stash.jobs then stash.groups = stash.jobs end
+
+			if shared.qtarget and stash.target then
 				exports.qtarget:RemoveZone(stash.name)
 				exports.qtarget:AddBoxZone(stash.name, stash.target.loc, stash.target.length or 0.5, stash.target.width or 0.5,
 				{
@@ -121,9 +123,9 @@ Inventory.Stashes = setmetatable(data('stashes'), {
 				}, {
 					options = {
 						{
-              icon = stash.target.icon or 'fas fa-warehouse',
-              label = stash.target.label or shared.locale('open_stash'),
-							job = stash.jobs,
+							icon = stash.target.icon or 'fas fa-warehouse',
+							label = stash.target.label or shared.locale('open_stash'),
+							job = stash.groups,
 							action = function()
 								OpenStash({id=id})
 							end

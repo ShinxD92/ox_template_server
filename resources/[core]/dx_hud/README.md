@@ -1,6 +1,5 @@
 # dx_hud
 
-This started as a fork of Cosmo HUD but ended up being a complete rewrite.  
 dx_hud is an HUD for FiveM and ESX Legacy.
 
 ## Requirements
@@ -9,27 +8,12 @@ dx_hud is an HUD for FiveM and ESX Legacy.
 - esx_status
 - esx_basicneeds
 
-## Optionals
+## Voice services configuration
 
+You can change the voice service the HUD will be using in the config file.  
+Currently supported options are:
 - pma-voice
-
-## Useful Snippets
-
-### I won't provide any support for the snippets below, it's up to you to understand if you need it or not or if you have any conflicts aswell.
-
-If you want to equal health among peds, run this client-side every tick.
-```lua
-if GetEntityMaxHealth(PlayerPedId()) ~= 200 then
-  SetEntityMaxHealth(PlayerPedId(), 200)
-  SetEntityHealth(PlayerPedId(), 200)
-end
-```
-
-If you want to disable health regen, run this client-side every tick.
-```lua
-  SetPlayerHealthRechargeMultiplier(PlayerId(), 0.0) 
-  SetPlayerHealthRechargeLimit(PlayerId(), 0.0)
-```
+- saltychat
 
 ## Download & Installation
 
@@ -60,7 +44,8 @@ ensure dx_hud
 ![dx_hud screenshot](https://user-images.githubusercontent.com/15928886/154711951-584adcec-5369-477b-8a4a-f3c006182881.png)
 
 ## Thanks to
-[nojdh](https://github.com/nojdh/) for Cosmo HUD
+[Overextended Community](https://discord.gg/overextended) for always being supportive 🐂❤️  
+[nojdh](https://github.com/nojdh/) for Cosmo HUD, which initially this was a fork of
 
 <br>
 <table><tr><td><h3 align='center'>Legal Notices</h2></tr></td>

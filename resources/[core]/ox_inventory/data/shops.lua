@@ -106,7 +106,7 @@ return {
 
 	PoliceArmoury = {
 		name = 'Police Armoury',
-		jobs = shared.police,
+		groups = shared.police,
 		blip = {
 			id = 110, colour = 84, scale = 0.8
 		}, inventory = {
@@ -114,9 +114,9 @@ return {
 			{ name = 'ammo-rifle', price = 5, },
 			{ name = 'WEAPON_FLASHLIGHT', price = 200 },
 			{ name = 'WEAPON_NIGHTSTICK', price = 100 },
-			{ name = 'WEAPON_PISTOL', price = 500 },
-			{ name = 'WEAPON_CARBINERIFLE', price = 1000, grade = 3 },
-			{ name = 'WEAPON_STUNGUN', price = 500 }
+			{ name = 'WEAPON_PISTOL', price = 500, metadata = { registered = true, serial = 'POL' }, license = 'weapon' },
+			{ name = 'WEAPON_CARBINERIFLE', price = 1000, metadata = { registered = true, serial = 'POL' }, license = 'weapon', grade = 3 },
+			{ name = 'WEAPON_STUNGUN', price = 500, metadata = { registered = true, serial = 'POL'} }
 		}, locations = {
 			vec3(451.51, -979.44, 30.68)
 		}, targets = {
@@ -126,7 +126,9 @@ return {
 
 	Medicine = {
 		name = 'Medicine Cabinet',
-		jobs = { ['ambulance'] = 0 },
+		groups = {
+			['ambulance'] = 0
+		},
 		blip = {
 			id = 403, colour = 69, scale = 0.8
 		}, inventory = {

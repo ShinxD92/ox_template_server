@@ -1,9 +1,23 @@
+if not lib then return end
+
 local Items = {}
-local ItemList = items()
+local ItemList = shared.items
 
 -- Slot count and maximum weight for containers
+-- Whitelist and blacklist: ['item_name'] = true
 Items.containers = {
-	['paperbag'] = {5, 1000}
+	['paperbag'] = {
+		size = {5, 1000},
+		blacklist = {
+			['testburger'] = true -- No burgers!
+		}
+	},
+	['pizzabox'] = {
+		size = {1, 1000},
+		whitelist = {
+			['pizza'] = true -- Pizza box for pizza only
+		}
+	}
 }
 
 -- Possible metadata when creating garbage
@@ -23,8 +37,8 @@ local function GetItem(item)
 	if item then
 		local type
 		item = string.lower(item)
-		if item:find('weapon_') then type, item = 1, string.upper(item)
-		elseif item:find('ammo-') then type = 2
+		if item:sub(0, 7) == 'weapon_' then type, item = 1, string.upper(item)
+		elseif item:sub(0, 5) == 'ammo-' then type = 2
 		elseif item:sub(0, 3) == 'at_' then type = 3 end
 		return ItemList[item] or false, type
 	end
@@ -43,7 +57,7 @@ CreateThread(function()
 		local items = MySQL.query.await('SELECT * FROM items')
 		if items then
 			local query = {}
-			for i=1, #items do
+			for i = 1, #items do
 				local v = items[i]
 				if i == 1 then query[i] = ('DELETE FROM items WHERE name = "%s"'):format(v.name) else query[i] = ('OR name = "%s"'):format(v.name) end
 				v.name = v.name
@@ -125,7 +139,7 @@ local itemFormat = [[
 	while true do
 		Wait(45000)
 		local Players = ESX.GetPlayers()
-		for i=1, #Players do
+		for i = 1, #Players do
 			local i = Players[i]
 			--if not IsPlayerAceAllowed(i, 'command.refresh') then
 				local inv, ped = Inventory(i), GetPlayerPed(i)
@@ -159,7 +173,7 @@ end)
 local function GenerateText(num)
 	local str
 	repeat str = {}
-		for i=1, num do str[i] = string.char(math.random(65, 90)) end
+		for i = 1, num do str[i] = string.char(math.random(65, 90)) end
 		str = table.concat(str)
 	until str ~= 'POL' and str ~= 'EMS'
 	return str
@@ -178,7 +192,7 @@ CreateThread(function() Inventory = server.inventory end)
 
 function Items.Metadata(inv, item, metadata, count)
 	if type(inv) ~= 'table' then inv = Inventory(inv) end
-	local isWeapon = item.name:find('WEAPON_')
+	local isWeapon = item.name:sub(0, 7) == 'WEAPON_'
 	if not isWeapon then metadata = not metadata and {} or type(metadata) == 'string' and {type=metadata} or metadata end
 
 	if isWeapon then
@@ -187,7 +201,7 @@ function Items.Metadata(inv, item, metadata, count)
 		if not metadata.ammo and item.ammoname then metadata.ammo = 0 end
 		if not metadata.components then metadata.components = {} end
 
-		if metadata.registered ~= false then
+		if metadata.registered ~= false and metadata.ammo then
 			metadata.registered = type(metadata.registered) == 'string' and metadata.registered or inv.player.name
 			metadata.serial = GenerateSerial(metadata.serial)
 		end
@@ -197,7 +211,7 @@ function Items.Metadata(inv, item, metadata, count)
 		if container then
 			count = 1
 			metadata.container = metadata.container or GenerateText(3)..os.time()
-			metadata.size = container
+			metadata.size = container.size
 		elseif item.name == 'identification' then
 			count = 1
 			if next(metadata) == nil then
@@ -224,6 +238,44 @@ function Items.Metadata(inv, item, metadata, count)
 	end
 
 	return metadata, count
+end
+
+function Items.CheckMetadata(metadata, item, name)
+	if metadata.bag then
+		metadata.container = metadata.bag
+		metadata.size = ItemList.containers[name]?.size or {5, 1000}
+		metadata.bag = nil
+	end
+
+	if metadata.durability and not item.durability and not item.degrade and not name:sub(0, 7) == 'WEAPON_' then
+		metadata.durability = nil
+	end
+
+	if metadata.components then
+		if table.type(metadata.components) == 'array' then
+			for i = 1, #metadata.components do
+				if not ItemList[metadata.components[i]] then
+					table.remove(metadata.components, i)
+				end
+			end
+		else
+			local components = {}
+			local size = 0
+			for _, component in pairs(metadata.components) do
+				if component and ItemList[component] then
+					size += 1
+					components[size] = component
+				end
+			end
+			metadata.components = components
+		end
+	end
+
+	if metadata.serial and item.name:sub(0, 7) == 'WEAPON_' and not item.ammoname then
+		metadata.serial = nil
+	end
+
+	return metadata
 end
 
 local function Item(name, cb)
