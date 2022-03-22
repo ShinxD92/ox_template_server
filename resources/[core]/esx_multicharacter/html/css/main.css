@@ -7,7 +7,6 @@
 	font-weight: 300;
 	font-size: 1.6vh;
     font-family: Calibri, "Helvetica", san-serif;
-	text-transform: capitalize;
 }
 
 html {
@@ -23,7 +22,7 @@ body {
 }
 
 .main-container {
-    display: none;
+    display:none;
     position: absolute;
 	top: 50%;
     right: 25;
@@ -36,9 +35,7 @@ body {
 	top: 5%;
     left: 50%;
     transform: translate(-50%);
-	font-size: 1.5rem;
-	color: #ffd400;
-	font-weight: 600;
+	font-size: 1.1rem;
 }
 
 .footer {
@@ -46,7 +43,7 @@ body {
 	bottom: 5%;
     left: 50%;
     transform: translate(-50%);
-	font-size: 0.7rem;
+	font-size: 1.2rem;
 }
 
 .character-box {
@@ -55,11 +52,11 @@ body {
 	flex-direction: column;
 	justify-content: center;
 	align-items: center;
-	text-align: left;
-	line-height: 1.0rem;
-	height: calc(50vh - 3rem);
+	text-align: center;
+	line-height: 1.4rem;
+	height: calc(60vh - 3rem);
 	width: 20rem;
-	padding: 1rem;
+	padding: 0rem;
 	border: 1px rgba(12,12,12,200) solid;
 	box-shadow: 0px 0px 4px 1px rgba(12,12,12,20);
 }

@@ -147,7 +147,7 @@ if ESX.GetConfig().Multichar then
 		slots = slots
 		local elements = {}
 		local Character = next(Characters)
-		exports.spawnmanager:forceRespawn()
+		--exports.spawnmanager:forceRespawn(),
 
 		if Character == nil then
 			SendNUIMessage({
@@ -307,6 +307,7 @@ if ESX.GetConfig().Multichar then
 		repeat Citizen.Wait(200) until not IsScreenFadedOut()
 		TriggerServerEvent('esx:onPlayerSpawn')
 		TriggerEvent('esx:onPlayerSpawn')
+		--TriggerEvent('selector:show')
 		TriggerEvent('playerSpawned')
 		TriggerEvent('esx:restoreLoadout')
 		Characters, hidePlayers = {}, false
