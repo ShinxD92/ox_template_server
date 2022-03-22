@@ -10,8 +10,7 @@ version '1.0.0'
 
 server_scripts {
   '@es_extended/locale.lua',
-  'server/main.lua',
-  'server/version_check.lua'
+  'main.lua'
 }
 
 client_scripts {
