@@ -26,8 +26,4 @@ SendNotify = function(msg, type)
 		text = msg,
 		length = 7500
 	})
-	--TriggerEvent('t-notify:client:Alert', { style = type, message = msg })                            
-	-- TriggerEvent('esx:showNotification', msg)						-- Default GTA V notification.
-	-- TriggerEvent('b1g_notify:client:Notify', { type = type, text = msg })		-- https://github.com/CarlosVergikosk/B1G_NOTIFY
-
 end
