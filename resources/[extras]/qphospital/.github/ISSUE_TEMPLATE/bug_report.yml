@@ -1,0 +1,52 @@
+name: Bug Report
+description: Create a bug report to help us improve our resource.
+title: "Bug: <short description>"
+labels: New Issue
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Please fill out this template to the best of your ability.
+- type: dropdown
+  id: developement-issue
+  attributes:
+    label: Developement Issue
+    description: Is this issue related to the hospital system still being in development?
+    options:
+      - "Yes"
+      - "No"
+      - Unsure
+  validations:
+      required: true
+- type: textarea
+  id: description
+  attributes:
+    label: Description
+    description: A clear description of what the issue is, please include the reproduction steps.
+  validations:
+    required: true
+- type: textarea
+  id: reproduction
+  attributes:
+    label: Reproduction
+    description: Steps to reproduce the issue. Use numerical formatting when giving the reproduction steps, see down below for a example.
+  validations:
+    required: true
+- type: markdown
+  attributes:
+    value: |
+      ## Example
+      ```
+        1. Go to '...'
+        2. Click on '....'
+        3. Scroll down to '....'
+        4. See error
+      ```
+- type: textarea
+  id: evidence
+  attributes:
+    label: Video Evidence
+    description: If applicable, add a screenshot or a video to help show / explain your problem.
+  validations:
+    required: false

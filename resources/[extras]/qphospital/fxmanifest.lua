@@ -1,22 +1,45 @@
-fx_version 'cerulean'
-game 'gta5'
-lua54 'yes'
+-- FX Information --
+fx_version   'cerulean'
+lua54        'yes'
+game         'gta5'
 
-author 'qpr' -- https://github.com/ohqpr
+-- Resource Information --
+name         'qphospital'
+authors      'qpr'
+version      '1.0.6'
+repository   'https://github.com/ohqpr/qphospital'
+description  'Hospital treatment system'
 
-version '1.0.3'
-
-client_script 'client.lua'
-server_script 'server/*.lua'
+-- Manifest --
+dependencies {
+  '/server:5104',
+  '/onesync',
+  'oxmysql',
+  'ox_lib',
+  'ox_inventory',
+  'qtarget',
+  'nh-context'
+}
 
 shared_scripts {
   '@es_extended/imports.lua',
-  'config.lua'
+  '@ox_lib/init.lua',
+  'shared/configuration.lua',
+  'shared/locales.lua',
+  'locales/*.lua'
 }
 
-dependencies {
-  'qtarget',
-  'nh-context',
-  'es_extended',
-  'esx_ambulancejob'
+client_script 'client/main.lua'
+
+server_scripts {
+  '@oxmysql/lib/MySQL.lua',
+  'init.lua',
+  'server/main.lua'
+}
+
+files {
+  'web/public/index.css',
+  'web/src/*',
+  'web/init.js',
+  'web/debug.js'
 }

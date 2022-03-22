@@ -1,0 +1,45 @@
+name: Feature Request
+description: Suggest a feature that you would like added/improved upon.
+title: "Enhancement: <short description>"
+labels: Enhancement
+
+body:
+- type: markdown
+  attributes:
+    value: |
+      Please fill out the template provided to the best of your ability.
+- type: dropdown
+  id: feature
+  attributes:
+    label: Additions
+    description: If this feature request please specify. Otherwise, use "Other". 
+    options:
+      - Other
+      - Feature
+      - Code adjutment
+  validations:
+      required: true
+- type: dropdown
+  id: dependency
+  attributes:
+    label: Dependency
+    description: Does your suggestion require any dependencies? 
+    options:
+      - "Yes" 
+      - "No"
+  validations:
+    required: true
+- type: textarea
+  id: feat-description
+  attributes:
+    label: Feature Description
+    description: Please include as much details as possible, we want to know everything about it.
+  validations:
+    required: true
+- type: textarea
+  id: references
+  attributes:
+    label: References
+    description: Do you have any references to help us visualize your suggestion?
+  validations:
+    required: false

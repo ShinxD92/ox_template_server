@@ -1,0 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap');
+
+body {
+  margin: 10;
+  font-family:'Roboto', 'Ubuntu', sans-serif;
+  height: 75vh;
+  background: none !important;
+  overflow: visible;
+  user-select: text;
+}
+
+:focus {
+  outline: 5 !important;
+  box-shadow: 0 0 0 0 rgba(57, 115, 161, 0.767) !important;
+}
